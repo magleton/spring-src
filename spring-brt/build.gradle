@@ -11,5 +11,19 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.4'
+    compile group: 'com.mchange', name: 'mchange-commons-java', version: '0.2.15'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.37'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el', version: '9.0.37'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.37'
     compile(project(":spring-context"))
+    compile(project(":spring-aop"))
+    compile(project(":spring-tx"))
+    compile(project(":spring-jdbc"))
+    compile(project(":spring-orm"))
+    compile(project(":spring-aspects"))
+    compile(project(":spring-web"))
+    compile(project(":spring-webmvc"))
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
 }
