@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 
-@Configuration
+//@Configuration
 @EnableTransactionManagement
 @ComponentScan("com.geoxus")
 public class AppConfig {
