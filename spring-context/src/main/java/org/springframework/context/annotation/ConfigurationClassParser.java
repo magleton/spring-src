@@ -261,6 +261,8 @@ class ConfigurationClassParser {
 	 * @param sourceClass a source class
 	 * @return the superclass, or {@code null} if none found or previously processed
 	 */
+	// todo 处理配置类上的常用的注解
+	// todo @Component、@PropertySources、@ComponentScans、@ComponentScan、@ImportResource
 	@Nullable
 	protected final SourceClass doProcessConfigurationClass(
 			ConfigurationClass configClass, SourceClass sourceClass, Predicate<String> filter)

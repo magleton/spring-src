@@ -371,6 +371,9 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 * Candidate status is determined by BeanDefinition attribute metadata.
 	 * @see ConfigurationClassEnhancer
 	 */
+	// todo 标记了@Configuration的配置被称为完整配置类
+	// todo 标记了@Component、@ComponentScan、@Import、@ImportResource、@Bean等注解的类被称为简化配置类
+	// todo 将标记了@Configuration注解的配置类进行[完整配置类]增强处理
 	public void enhanceConfigurationClasses(ConfigurableListableBeanFactory beanFactory) {
 		Map<String, AbstractBeanDefinition> configBeanDefs = new LinkedHashMap<>();
 		for (String beanName : beanFactory.getBeanDefinitionNames()) {
