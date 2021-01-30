@@ -153,6 +153,7 @@ public class AnnotationTransactionAttributeSource extends AbstractFallbackTransa
 		return determineTransactionAttribute(clazz);
 	}
 
+	// todo 获取事务的属性
 	@Override
 	@Nullable
 	protected TransactionAttribute findTransactionAttribute(Method method) {

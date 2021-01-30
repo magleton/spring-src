@@ -40,7 +40,7 @@ abstract class TransactionAttributeSourcePointcut extends StaticMethodMatcherPoi
 		setClassFilter(new TransactionAttributeSourceClassFilter());
 	}
 
-
+	// todo 目标类与目标方法的匹配
 	@Override
 	public boolean matches(Method method, Class<?> targetClass) {
 		TransactionAttributeSource tas = getTransactionAttributeSource();

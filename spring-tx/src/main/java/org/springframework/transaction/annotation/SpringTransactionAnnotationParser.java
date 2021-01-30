@@ -46,6 +46,7 @@ public class SpringTransactionAnnotationParser implements TransactionAnnotationP
 
 	@Override
 	@Nullable
+	// todo 解析@Transactional注解
 	public TransactionAttribute parseTransactionAnnotation(AnnotatedElement element) {
 		AnnotationAttributes attributes = AnnotatedElementUtils.findMergedAnnotationAttributes(
 				element, Transactional.class, false, false);
@@ -61,6 +62,7 @@ public class SpringTransactionAnnotationParser implements TransactionAnnotationP
 		return parseTransactionAnnotation(AnnotationUtils.getAnnotationAttributes(ann, false, false));
 	}
 
+	// todo 将@Transactional 中配置的属性解析出来,存放到RuleBasedTransactionAttribute对象中
 	protected TransactionAttribute parseTransactionAnnotation(AnnotationAttributes attributes) {
 		RuleBasedTransactionAttribute rbta = new RuleBasedTransactionAttribute();
 

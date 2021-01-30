@@ -370,9 +370,11 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				logger.debug("Creating new transaction with name [" + def.getName() + "]: " + def);
 			}
 			try {
+				// todo 开始事务
 				return startTransaction(def, transaction, debugEnabled, suspendedResources);
 			}
 			catch (RuntimeException | Error ex) {
+				// todo  恢复事务
 				resume(null, suspendedResources);
 				throw ex;
 			}
@@ -391,13 +393,16 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	/**
 	 * Start a new transaction.
 	 */
+	// todo 开始事务
 	private TransactionStatus startTransaction(TransactionDefinition definition, Object transaction,
 			boolean debugEnabled, @Nullable SuspendedResourcesHolder suspendedResources) {
 
 		boolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);
 		DefaultTransactionStatus status = newTransactionStatus(
 				definition, transaction, true, newSynchronization, debugEnabled, suspendedResources);
+		// todo 开始事务
 		doBegin(transaction, definition);
+		// todo 准备同步
 		prepareSynchronization(status, definition);
 		return status;
 	}
@@ -696,6 +701,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 			if (defStatus.isDebug()) {
 				logger.debug("Transactional code has requested rollback");
 			}
+			// todo 处理事务的回滚
 			processRollback(defStatus, false);
 			return;
 		}
@@ -704,10 +710,12 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 			if (defStatus.isDebug()) {
 				logger.debug("Global transaction is marked as rollback-only but transactional code requested commit");
 			}
+			// todo  处理事务的回滚
 			processRollback(defStatus, true);
 			return;
 		}
 
+		// todo 处理事务的提交
 		processCommit(defStatus);
 	}
 
@@ -717,6 +725,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 * @param status object representing the transaction
 	 * @throws TransactionException in case of commit failure
 	 */
+	// todo 处理事务commit
 	private void processCommit(DefaultTransactionStatus status) throws TransactionException {
 		try {
 			boolean beforeCompletionInvoked = false;
@@ -798,6 +807,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 * @see #doRollback
 	 * @see #doSetRollbackOnly
 	 */
+	// todo 回滚事务
 	@Override
 	public final void rollback(TransactionStatus status) throws TransactionException {
 		if (status.isCompleted()) {

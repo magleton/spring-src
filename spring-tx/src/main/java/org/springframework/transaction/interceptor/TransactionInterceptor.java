@@ -50,6 +50,7 @@ import org.springframework.transaction.TransactionManager;
  * @see org.springframework.aop.framework.ProxyFactoryBean
  * @see org.springframework.aop.framework.ProxyFactory
  */
+// todo 事务拦截器  , 处理数据库事务相关的方法
 @SuppressWarnings("serial")
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor, Serializable {
 
@@ -115,6 +116,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
 		Class<?> targetClass = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
 
 		// Adapt to TransactionAspectSupport's invokeWithinTransaction...
+		// todo  在事务范围内调用目标方法
 		return invokeWithinTransaction(invocation.getMethod(), targetClass, invocation::proceed);
 	}
 

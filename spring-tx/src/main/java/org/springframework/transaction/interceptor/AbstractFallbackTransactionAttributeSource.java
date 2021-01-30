@@ -87,6 +87,7 @@ public abstract class AbstractFallbackTransactionAttributeSource implements Tran
 	 * @return a TransactionAttribute for this method, or {@code null} if the method
 	 * is not transactional
 	 */
+	// todo 获取事务的属性
 	@Override
 	@Nullable
 	public TransactionAttribute getTransactionAttribute(Method method, @Nullable Class<?> targetClass) {
@@ -147,6 +148,7 @@ public abstract class AbstractFallbackTransactionAttributeSource implements Tran
 	 * @since 4.1.8
 	 * @see #getTransactionAttribute
 	 */
+	// todo 计算事务的属性
 	@Nullable
 	protected TransactionAttribute computeTransactionAttribute(Method method, @Nullable Class<?> targetClass) {
 		// Don't allow no-public methods as required.

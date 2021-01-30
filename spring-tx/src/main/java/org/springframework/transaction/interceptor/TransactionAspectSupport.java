@@ -326,6 +326,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * @return the return value of the method, if any
 	 * @throws Throwable propagated from the target invocation
 	 */
+	// todo 在事务范围内调用方法
 	@Nullable
 	protected Object invokeWithinTransaction(Method method, @Nullable Class<?> targetClass,
 			final InvocationCallback invocation) throws Throwable {
@@ -358,6 +359,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 		if (txAttr == null || !(ptm instanceof CallbackPreferringPlatformTransactionManager)) {
 			// Standard transaction demarcation with getTransaction and commit/rollback calls.
+			// todo 创建事务对象
 			TransactionInfo txInfo = createTransactionIfNecessary(ptm, txAttr, joinpointIdentification);
 
 			Object retVal;
@@ -383,6 +385,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 				}
 			}
 
+			// todo 提交事务返回后
 			commitTransactionAfterReturning(txInfo);
 			return retVal;
 		}
@@ -554,11 +557,13 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * tell if there was a transaction created.
 	 * @see #getTransactionAttributeSource()
 	 */
+	// todo 创建事务对象
 	@SuppressWarnings("serial")
 	protected TransactionInfo createTransactionIfNecessary(@Nullable PlatformTransactionManager tm,
 			@Nullable TransactionAttribute txAttr, final String joinpointIdentification) {
 
 		// If no name specified, apply method identification as transaction name.
+		// todo  假如没有指定事务的名字 , 则使用方法的ID作为事务的名字
 		if (txAttr != null && txAttr.getName() == null) {
 			txAttr = new DelegatingTransactionAttribute(txAttr) {
 				@Override
@@ -580,6 +585,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 				}
 			}
 		}
+		// todo 准备事务
 		return prepareTransactionInfo(tm, txAttr, joinpointIdentification, status);
 	}
 
@@ -591,6 +597,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * @param status the TransactionStatus for the current transaction
 	 * @return the prepared TransactionInfo object
 	 */
+	// todo 准备事务信息
 	protected TransactionInfo prepareTransactionInfo(@Nullable PlatformTransactionManager tm,
 			@Nullable TransactionAttribute txAttr, String joinpointIdentification,
 			@Nullable TransactionStatus status) {
@@ -625,11 +632,13 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * Do nothing if we didn't create a transaction.
 	 * @param txInfo information about the current transaction
 	 */
+	// todo 提交事务在返回后
 	protected void commitTransactionAfterReturning(@Nullable TransactionInfo txInfo) {
 		if (txInfo != null && txInfo.getTransactionStatus() != null) {
 			if (logger.isTraceEnabled()) {
 				logger.trace("Completing transaction for [" + txInfo.getJoinpointIdentification() + "]");
 			}
+			// todo 通过事务管理器提交事务
 			txInfo.getTransactionManager().commit(txInfo.getTransactionStatus());
 		}
 	}
@@ -640,6 +649,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * @param txInfo information about the current transaction
 	 * @param ex throwable encountered
 	 */
+	// todo 当包含在事务中的语句抛出异常时,会执行该方法
 	protected void completeTransactionAfterThrowing(@Nullable TransactionInfo txInfo, Throwable ex) {
 		if (txInfo != null && txInfo.getTransactionStatus() != null) {
 			if (logger.isTraceEnabled()) {
@@ -648,6 +658,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 			}
 			if (txInfo.transactionAttribute != null && txInfo.transactionAttribute.rollbackOn(ex)) {
 				try {
+					// todo 事务回滚
 					txInfo.getTransactionManager().rollback(txInfo.getTransactionStatus());
 				}
 				catch (TransactionSystemException ex2) {
@@ -684,6 +695,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	 * <p>Call this in all cases: exception or normal return!
 	 * @param txInfo information about the current transaction (may be {@code null})
 	 */
+	// todo 清除本次事务执行的相关信息
 	protected void cleanupTransactionInfo(@Nullable TransactionInfo txInfo) {
 		if (txInfo != null) {
 			txInfo.restoreThreadLocalStatus();

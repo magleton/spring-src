@@ -250,6 +250,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 		return (txObject.hasConnectionHolder() && txObject.getConnectionHolder().isTransactionActive());
 	}
 
+	// todo 开始[开启]事务
 	@Override
 	protected void doBegin(Object transaction, TransactionDefinition definition) {
 		DataSourceTransactionObject txObject = (DataSourceTransactionObject) transaction;
@@ -280,9 +281,10 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 				if (logger.isDebugEnabled()) {
 					logger.debug("Switching JDBC Connection [" + con + "] to manual commit");
 				}
+				// todo 设置自动提交为false, 关闭自动提交
 				con.setAutoCommit(false);
 			}
-
+			// todo 准备事务链接对象
 			prepareTransactionalConnection(con, definition);
 			txObject.getConnectionHolder().setTransactionActive(true);
 
@@ -318,6 +320,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 		TransactionSynchronizationManager.bindResource(obtainDataSource(), suspendedResources);
 	}
 
+	// todo 处理事务commit
 	@Override
 	protected void doCommit(DefaultTransactionStatus status) {
 		DataSourceTransactionObject txObject = (DataSourceTransactionObject) status.getTransaction();
@@ -326,6 +329,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 			logger.debug("Committing JDBC transaction on Connection [" + con + "]");
 		}
 		try {
+			// todo 事务提交
 			con.commit();
 		}
 		catch (SQLException ex) {
@@ -341,6 +345,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 			logger.debug("Rolling back JDBC transaction on Connection [" + con + "]");
 		}
 		try {
+			// todo 处理回滚
 			con.rollback();
 		}
 		catch (SQLException ex) {
@@ -405,6 +410,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 	 * @since 4.3.7
 	 * @see #setEnforceReadOnly
 	 */
+	// todo 与初始化事务的链接
 	protected void prepareTransactionalConnection(Connection con, TransactionDefinition definition)
 			throws SQLException {
 
