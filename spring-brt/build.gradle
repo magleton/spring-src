@@ -17,6 +17,7 @@ dependencies {
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.37'
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el', version: '9.0.37'
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.37'
+    compile group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
     compile(project(":spring-context"))
     compile(project(":spring-aop"))
     compile(project(":spring-tx"))
@@ -25,5 +26,5 @@ dependencies {
     compile(project(":spring-aspects"))
     compile(project(":spring-web"))
     compile(project(":spring-webmvc"))
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
 }
