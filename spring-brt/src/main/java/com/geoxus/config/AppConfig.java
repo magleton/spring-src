@@ -2,12 +2,8 @@ package com.geoxus.config;
 
 import com.geoxus.entities.Person;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mysql.jdbc.Driver;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -29,7 +25,7 @@ public class AppConfig {
 	}
 
 	@Bean
-	public ComboPooledDataSource dataSource( ) throws PropertyVetoException {
+	public ComboPooledDataSource dataSource() throws PropertyVetoException {
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
 		dataSource.setUser("britton");
 		dataSource.setPassword("britton");
@@ -41,12 +37,12 @@ public class AppConfig {
 	}
 
 	@Bean
-	public JdbcTemplate jdbcTemplate(DataSource dataSource){
-		return new JdbcTemplate( dataSource);
+	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+		return new JdbcTemplate(dataSource);
 	}
 
 	@Bean
-	public PlatformTransactionManager platformTransactionManager(DataSource dataSource){
-		return  new DataSourceTransactionManager(dataSource);
+	public PlatformTransactionManager platformTransactionManager(DataSource dataSource) {
+		return new DataSourceTransactionManager(dataSource);
 	}
 }
