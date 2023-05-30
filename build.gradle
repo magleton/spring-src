@@ -10,6 +10,15 @@ plugins {
 	id "com.jfrog.artifactory" version '4.12.0' apply false
 	id "io.freefair.aspectj" version '4.1.1' apply false
 	id "com.github.ben-manes.versions" version '0.24.0'
+	id "idea"
+}
+
+apply plugin: "idea"
+idea {
+	module {
+		downloadJavadoc = true
+		downloadSources = true
+	}
 }
 
 apply from: "$rootDir/gradle/build-scan-user-data.gradle"
@@ -278,7 +287,9 @@ configure(allprojects) { project ->
 		}
 		repositories {
 			mavenCentral()
-			maven { url "https://repo.spring.io/libs-spring-framework-build" }
+			//maven { url "https://repo.spring.io/libs-spring-framework-build" }
+			maven {url "https://maven.aliyun.com/repository/spring"}
+			maven {url "https://maven.aliyun.com/repository/public"}
 		}
 	}
 	configurations.all {
